@@ -1,5 +1,6 @@
 package com.matheus.crud.modules.produto.service;
 
+import com.matheus.crud.model.Produto;
 import com.matheus.crud.modules.produto.request.ProdutoRequest;
 import com.matheus.crud.modules.produto.response.ProdutoResponse;
 import org.springframework.data.domain.Page;
@@ -11,9 +12,9 @@ public interface ProdutoService {
 
     Page<ProdutoResponse> findAll(Pageable pageable);
 
-    ProdutoResponse findById(Long id);
+    Produto findById(Long id);
 
     ProdutoResponse update(ProdutoRequest produtoRequest, Long id);
 
-    void delete(Long id;)
+    void delete(Long id);
 }
