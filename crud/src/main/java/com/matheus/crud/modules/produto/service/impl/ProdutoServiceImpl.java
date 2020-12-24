@@ -1,6 +1,7 @@
 package com.matheus.crud.modules.produto.service.impl;
 
 import com.matheus.crud.exception.ResourceNotFoundException;
+import com.matheus.crud.model.Produto;
 import com.matheus.crud.modules.produto.mapper.ProdutoMapper;
 import com.matheus.crud.modules.produto.request.ProdutoRequest;
 import com.matheus.crud.modules.produto.response.ProdutoResponse;
@@ -31,22 +32,22 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public ProdutoResponse findById(Long id) {
+    public Produto findById(Long id) {
         return this.repository.findById(id)
-                .map(ProdutoMapper::toResponse)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
     }
 
     @Override
     public ProdutoResponse update(ProdutoRequest produtoRequest, Long id) {
 
-        final var produto = this.repository.findById(id);
+        final var produto = this.repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
-        if(!produto.isPresent()) {
-            new ResourceNotFoundException("No records found for this ID");
-        }
+        produto.setNome(produtoRequest.getNome());
+        produto.setEstoque(produtoRequest.getEstoque());
+        produto.setPreco(produtoRequest.getPreco());
 
-        return ProdutoMapper.toResponse(this.repository.save(ProdutoMapper.of(produtoRequest)));
+        return ProdutoMapper.toResponse(this.repository.save(produto));
     }
 
     @Override
