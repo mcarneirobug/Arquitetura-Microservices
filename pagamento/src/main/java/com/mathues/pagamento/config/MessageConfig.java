@@ -1,4 +1,4 @@
-package com.matheus.crud.config.rabbitmq;
+package com.mathues.pagamento.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -22,25 +22,15 @@ public class MessageConfig {
     @Value("${crud.rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${crud.rabbitmq.routingkey}")
+    @Value("${crud.rabbitmq.queue}")
     private String queue;
 
     @Bean
-    public DirectExchange declareExchange() {
-        return new DirectExchange(exchange);
-    }
-
-    @Bean
-    public Queue declareQueue() {
-        return new Queue(queue, true);
-    }
-
-    @Bean
-    public Binding queue() {
-        return BindingBuilder
-                .bind(declareQueue())
-                .to(declareExchange())
-                .with(queue);
+    public Exchange declareExchange() {
+        return ExchangeBuilder
+                .directExchange(exchange)
+                .durable(true)
+                .build();
     }
 
     @Bean
