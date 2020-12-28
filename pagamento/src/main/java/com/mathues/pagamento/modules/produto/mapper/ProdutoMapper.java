@@ -12,7 +12,6 @@ public class ProdutoMapper {
     public static Produto to(ProdutoRequest produtoRequest) {
 
         final var produto = new Produto();
-
         produto.setEstoque(produtoRequest.getEstoque());
 
         return produto;
@@ -21,7 +20,6 @@ public class ProdutoMapper {
     public static ProdutoResponse toResponse(Produto produto) {
 
         final var produtoResponse = new ProdutoResponse();
-
         produtoResponse.setId(produto.getId());
         produtoResponse.setEstoque(produto.getEstoque());
 
