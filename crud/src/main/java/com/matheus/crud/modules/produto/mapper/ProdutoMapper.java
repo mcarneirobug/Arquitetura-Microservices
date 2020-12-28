@@ -12,6 +12,7 @@ public class ProdutoMapper {
     public static Produto of(ProdutoRequest produtoRequest) {
 
         final var produto = new Produto();
+
         produto.setNome(produtoRequest.getNome());
         produto.setEstoque(produtoRequest.getEstoque());
         produto.setPreco(produtoRequest.getPreco());
@@ -22,6 +23,7 @@ public class ProdutoMapper {
     public static ProdutoResponse toResponse(Produto produto) {
 
         final var produtoResponse = new ProdutoResponse();
+
         produtoResponse.setId(produto.getId());
         produtoResponse.setNome(produto.getNome());
         produtoResponse.setEstoque(produto.getEstoque());
@@ -29,4 +31,18 @@ public class ProdutoMapper {
 
         return produtoResponse;
     }
+
+    public static Produto to(ProdutoResponse produtoResponse) {
+
+        final var produto = new Produto();
+
+        produto.setId(produtoResponse.getId());
+        produto.setNome(produtoResponse.getNome());
+        produto.setEstoque(produtoResponse.getEstoque());
+        produto.setPreco(produtoResponse.getPreco());
+
+        return produto;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.matheus.crud.modules.produto.service.impl;
 
 import com.matheus.crud.exception.ResourceNotFoundException;
+import com.matheus.crud.message.ProdutoSendMessage;
 import com.matheus.crud.model.Produto;
 import com.matheus.crud.modules.produto.mapper.ProdutoMapper;
 import com.matheus.crud.modules.produto.request.ProdutoRequest;
@@ -15,14 +16,21 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository repository;
 
-    public ProdutoServiceImpl(ProdutoRepository repository) {
+    private final ProdutoSendMessage produtoSendMessage;
+
+    public ProdutoServiceImpl(ProdutoRepository repository, ProdutoSendMessage produtoSendMessage) {
         this.repository = repository;
+        this.produtoSendMessage = produtoSendMessage;
     }
 
     @Override
     public ProdutoResponse create(ProdutoRequest produtoRequest) {
-        return ProdutoMapper
+        final var produto = ProdutoMapper
                 .toResponse(this.repository.save(ProdutoMapper.of(produtoRequest)));
+
+        this.produtoSendMessage.sendMessage(produto);
+
+        return produto;
     }
 
     @Override
