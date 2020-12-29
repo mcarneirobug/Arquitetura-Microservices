@@ -31,14 +31,14 @@ public class VendaController {
         this.assembler = assembler;
     }
 
-    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/y-waml"})
+    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/y-yaml"})
     public VendaResponse findById(@PathVariable("id") Long id) {
         final var venda = this.service.findById(id);
         venda.add(linkTo(methodOn(VendaController.class).findById(id)).withSelfRel());
         return venda;
     }
 
-    @GetMapping(produces = {"application/json", "application/xml", "application/y-waml"})
+    @GetMapping(produces = {"application/json", "application/xml", "application/y-yaml"})
     public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                      @RequestParam(value = "limit", defaultValue = "12") int limit,
                                      @RequestParam(value = "direction", defaultValue = "asc") String direction) {
@@ -55,8 +55,8 @@ public class VendaController {
         return new ResponseEntity<>(pagedModel, HttpStatus.OK);
     }
 
-    @PostMapping(produces = {"application/json", "application/xml", "application/y-waml"},
-            consumes = {"application/json", "application/xml", "application/y-waml"})
+    @PostMapping(produces = {"application/json", "application/xml", "application/y-yaml"},
+            consumes = {"application/json", "application/xml", "application/y-yaml"})
     public VendaResponse create(@RequestBody VendaRequest vendaRequest) {
         final var venda = this.service.create(vendaRequest);
         venda.add(linkTo(methodOn(VendaController.class).findById(venda.getId())).withSelfRel());
