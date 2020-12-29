@@ -1,2 +1,4 @@
-package com.matheus.auth.modules.permission.service;public interface PermissionService {
+package com.matheus.auth.modules.permission.service;
+
+public interface PermissionService {
 }

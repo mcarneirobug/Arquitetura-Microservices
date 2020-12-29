@@ -1,8 +1,6 @@
 package com.matheus.auth.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -89,5 +87,18 @@ public class JwtTokenProvider {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+
+            if(claims.getBody().getExpiration().before(new Date())) {
+                return false;
+            }
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
 }
