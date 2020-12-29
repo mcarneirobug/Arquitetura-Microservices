@@ -29,14 +29,14 @@ public class ProdutoController {
         this.assembler = assembler;
     }
 
-    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/y-waml"})
+    @GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/y-yaml"})
     public ProdutoResponse findById(@PathVariable("id") Long id) {
         final var produto = ProdutoMapper.toResponse(this.produtoService.findById(id));
         produto.add(linkTo(methodOn(ProdutoController.class).findById(id)).withSelfRel());
         return produto;
     }
 
-    @GetMapping(produces = {"application/json", "application/xml", "application/y-waml"})
+    @GetMapping(produces = {"application/json", "application/xml", "application/y-yaml"})
     public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                      @RequestParam(value = "limit", defaultValue = "12") int limit,
                                      @RequestParam(value = "direction", defaultValue = "asc") String direction) {
@@ -53,8 +53,8 @@ public class ProdutoController {
         return new ResponseEntity<>(pagedModel, HttpStatus.OK);
     }
 
-    @PostMapping(produces = {"application/json", "application/xml", "application/y-waml"},
-                 consumes = {"application/json", "application/xml", "application/y-waml"})
+    @PostMapping(produces = {"application/json", "application/xml", "application/y-yaml"},
+                 consumes = {"application/json", "application/xml", "application/y-yaml"})
     public ProdutoResponse create(@RequestBody ProdutoRequest produtoRequest) {
         final var produto = this.produtoService.create(produtoRequest);
         produto.add(linkTo(methodOn(ProdutoController.class).findById(produto.getId())).withSelfRel());
@@ -62,8 +62,8 @@ public class ProdutoController {
     }
 
     @PutMapping(value = "/{id}",
-                produces = {"application/json", "application/xml", "application/y-waml"},
-                consumes = {"application/json", "application/xml", "application/y-waml"})
+                produces = {"application/json", "application/xml", "application/y-yaml"},
+                consumes = {"application/json", "application/xml", "application/y-yaml"})
     public ProdutoResponse update(@RequestBody ProdutoRequest produtoRequest, @PathVariable("id") Long id) {
         final var produto = this.produtoService.update(produtoRequest, id);
         produto.add(linkTo(methodOn(ProdutoController.class).findById(produto.getId())).withSelfRel());
