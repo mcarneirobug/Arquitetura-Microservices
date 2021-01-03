@@ -16,7 +16,7 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:mysql://127.0.0.1:3305/pagamento?allowPublicKeyRetrieval=true&sslMode=DISABLED&useSSL=false&useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://${data-base.host}:${data-base.port}/pagamento?allowPublicKeyRetrieval=true&sslMode=DISABLED&useSSL=false&useTimezone=true&serverTimezone=UTC
     username: root
     password: admin
   rabbitmq:
@@ -41,3 +41,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/registry/eureka
+
+data-base:
+  port: 3306
+  host: 127.0.0.1
